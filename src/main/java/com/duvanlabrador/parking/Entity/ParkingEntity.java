@@ -12,6 +12,7 @@ import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
 @Entity
 @Table(name = "parking")
 public class ParkingEntity {
