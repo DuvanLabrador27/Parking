@@ -48,6 +48,9 @@ public class VehicleServiceImpl implements IVehicleService {
         VehicleEntity vehicleEntity = this.vehicleRepository.findById(vehicleId)
                 .orElseThrow(() -> new NotFoundException("Vehicle not found whit ID" + vehicleId));
         vehicleEntity.setLicensePlate(vehicleDto.getLicensePlate());
+        vehicleEntity.setEntryTime(vehicleDto.getEntryTime());
+        vehicleEntity.setDepartureTime(vehicleDto.getDepartureTime());
+        vehicleEntity.setFirstEntry(vehicleDto.getFirstEntry());
 
         VehicleEntity updateVehicle = this.vehicleRepository.save(vehicleEntity);
         return mapToDto(updateVehicle);
@@ -64,6 +67,9 @@ public class VehicleServiceImpl implements IVehicleService {
         VehicleDto vehicle = new VehicleDto();
         vehicle.setVehicleId(vehicleEntity.getVehicleId());
         vehicle.setLicensePlate(vehicleEntity.getLicensePlate());
+        vehicle.setEntryTime(vehicleEntity.getEntryTime());
+        vehicle.setDepartureTime(vehicleEntity.getDepartureTime());
+        vehicle.setFirstEntry(vehicleEntity.getFirstEntry());
 
         return vehicle;
     }
@@ -71,6 +77,9 @@ public class VehicleServiceImpl implements IVehicleService {
     public VehicleEntity mapToEntity(VehicleDto vehicleDto){
         VehicleEntity vehicle = new VehicleEntity();
         vehicle.setLicensePlate(vehicleDto.getLicensePlate());
+        vehicle.setEntryTime(vehicleDto.getEntryTime());
+        vehicle.setDepartureTime(vehicleDto.getDepartureTime());
+        vehicle.setFirstEntry(vehicleDto.getFirstEntry());
 
         return vehicle;
     }

@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,15 +21,15 @@ public class VehicleEntity {
     private Long vehicleId;
     @Column(name = "license_plate", unique = true)
     private String licensePlate;
+    @Column(name = "entry_time")
+    private LocalDateTime entryTime;
+    @Column(name = "departure_time")
+    private LocalDateTime departureTime;
+    @Column(name = "first_entry")
+    private Boolean firstEntry;
     @ManyToOne(targetEntity = ParkingEntity.class)
     @JoinColumn(name = "parking_id")
     private ParkingEntity parking;
-    @OneToMany(
-            targetEntity = RegisterEntity.class,
-            mappedBy = "vehicle",
-            cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY
-    )
-    private Set<RegisterEntity> register = new HashSet<>();
+
 
 }

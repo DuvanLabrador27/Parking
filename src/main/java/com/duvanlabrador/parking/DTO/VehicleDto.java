@@ -8,11 +8,16 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class VehicleDto {
     private Long vehicleId;
     private String licensePlate;
+    private LocalDateTime entryTime;
+    private LocalDateTime departureTime;
+    private Boolean firstEntry;
 
 }
