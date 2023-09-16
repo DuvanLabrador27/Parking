@@ -20,6 +20,8 @@ public class UserEntity {
     @Column(name = "user_id")
     private Long userId;
     private String name;
+    @Column(name = "last_name")
+    private String lastName;
     private String username;
     private String password;
     @Email
