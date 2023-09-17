@@ -1,18 +1,18 @@
 package com.duvanlabrador.parking.Service.Interface;
 
-import com.duvanlabrador.parking.DTO.RegisterDto;
+
 import com.duvanlabrador.parking.DTO.UserDto;
+import com.duvanlabrador.parking.DTO.UserResponse;
 import org.springframework.http.ResponseEntity;
 
-import java.util.List;
-import java.util.Map;
+
 
 public interface IUserService {
-    public List<UserDto> getAllUsers();
+    public UserResponse getAllUsers(int pageNumber, int pageSize);
     public UserDto getUserById(Long userId);
-    public UserDto createUser(UserDto userDto);
+    public UserDto createUser(UserDto userDto) throws Exception;
     public UserDto updateUser(Long userId, UserDto userDto);
     public void deleteUser(Long userId);
 
-    ResponseEntity<String> signUp(Map<String,String> requestMap);
+    ResponseEntity<String> signUp(UserDto userDto) throws Exception;
 }

@@ -1,11 +1,8 @@
 package com.duvanlabrador.parking.Service.Impl;
 
-import com.duvanlabrador.parking.DTO.ParkingDto;
 import com.duvanlabrador.parking.DTO.VehicleDto;
-import com.duvanlabrador.parking.Entity.ParkingEntity;
 import com.duvanlabrador.parking.Entity.VehicleEntity;
-import com.duvanlabrador.parking.Exception.NotFoundException;
-import com.duvanlabrador.parking.Repository.ParkingRepository;
+import com.duvanlabrador.parking.Exception.GeneralException;
 import com.duvanlabrador.parking.Repository.VehicleRepository;
 import com.duvanlabrador.parking.Service.Interface.IVehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +28,7 @@ public class VehicleServiceImpl implements IVehicleService {
     @Override
     public VehicleDto getVehicleById(Long vehicleId) {
         VehicleEntity vehicleEntity = this.vehicleRepository.findById(vehicleId)
-                .orElseThrow(() -> new NotFoundException("Vehicle not found whit ID" + vehicleId));
+                .orElseThrow(() -> new GeneralException("Vehicle not found whit ID" + vehicleId));
         return mapToDto(vehicleEntity);
     }
 
@@ -46,7 +43,7 @@ public class VehicleServiceImpl implements IVehicleService {
     @Override
     public VehicleDto updateVehicle(Long vehicleId, VehicleDto vehicleDto) {
         VehicleEntity vehicleEntity = this.vehicleRepository.findById(vehicleId)
-                .orElseThrow(() -> new NotFoundException("Vehicle not found whit ID" + vehicleId));
+                .orElseThrow(() -> new GeneralException("Vehicle not found whit ID" + vehicleId));
         vehicleEntity.setLicensePlate(vehicleDto.getLicensePlate());
         vehicleEntity.setEntryTime(vehicleDto.getEntryTime());
         vehicleEntity.setDepartureTime(vehicleDto.getDepartureTime());
@@ -59,7 +56,7 @@ public class VehicleServiceImpl implements IVehicleService {
     @Override
     public void deleteVehicle(Long vehicleId) {
         VehicleEntity vehicleEntity = this.vehicleRepository.findById(vehicleId)
-                .orElseThrow(() -> new NotFoundException("Vehicle not found whit ID" + vehicleId));
+                .orElseThrow(() -> new GeneralException("Vehicle not found whit ID" + vehicleId));
         this.vehicleRepository.delete(vehicleEntity);
     }
 

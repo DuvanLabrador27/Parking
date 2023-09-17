@@ -1,5 +1,6 @@
 package com.duvanlabrador.parking.DTO;
 
+import com.duvanlabrador.parking.Util.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -42,7 +42,7 @@ public class ParkingEntity {
             fetch = FetchType.LAZY
     )
     private Set<VehicleEntity> vehicle = new HashSet<>();
-
-
-
+    @ManyToOne(targetEntity = UserEntity.class)
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
 }

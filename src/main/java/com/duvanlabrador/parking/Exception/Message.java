@@ -8,6 +8,6 @@ public class Message {
 
     }
     public static ResponseEntity<String> getResponseMessage(String messageTemp, HttpStatus httpStatus){
-        return new ResponseEntity<>("message" +  messageTemp, httpStatus);
+        return new ResponseEntity<>("message: " +  messageTemp, httpStatus);
     }
 }

@@ -1,5 +1,6 @@
 package com.duvanlabrador.parking.Entity;
 
+import com.duvanlabrador.parking.Util.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
@@ -33,6 +34,13 @@ public class UserEntity {
     private String role;
     @Column(name = "user_status")
     private String userStatus;
+    @OneToMany(
+            targetEntity = ParkingEntity.class,
+            mappedBy = "user",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY
+    )
+    private Set<ParkingEntity> parkingEntity = new HashSet<>();
 
 
 }

@@ -1,0 +1,1 @@
+INSERT INTO  users (email, last_name, name, password, role, user_status, username) VALUES('admin@mail.com', 'adminlastname', 'adminname', 'admin', 'ADMIN', 'true', 'admin');

@@ -1,33 +1,48 @@
 package com.duvanlabrador.parking.Controller;
 
-import com.duvanlabrador.parking.Exception.Message;
-import com.duvanlabrador.parking.Exception.SomethingWentWrong;
+
+import com.duvanlabrador.parking.DTO.UserDto;
+import com.duvanlabrador.parking.DTO.UserResponse;
 import com.duvanlabrador.parking.Service.Interface.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
+import java.util.List;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/api/v1")
 public class UserController {
     private final IUserService userService;
     @Autowired
     public UserController(IUserService userService){
         this.userService = userService;
     }
-    @PostMapping("/signup")
-    public ResponseEntity<String> createUser(@RequestBody(required = true) Map<String,String> requestMap){
-        try {
-            return this.userService.signUp(requestMap);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return Message.getResponseMessage(SomethingWentWrong.message, HttpStatus.INTERNAL_SERVER_ERROR);
+
+    @GetMapping("/users")
+    public UserResponse getAllUsers(
+            @RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNumber,
+            @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize){
+        return this.userService.getAllUsers(pageNumber,pageSize);
     }
+
+    @GetMapping("/users/{userId}")
+    public ResponseEntity<UserDto> getUserById(@PathVariable Long userId){
+        try {
+            UserDto user = this.userService.getUserById(userId);
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+
+    @PostMapping("/signup")
+    public ResponseEntity<String> createUser(@RequestBody UserDto userDto) throws Exception {
+
+            return this.userService.signUp(userDto);
+
+    }
+
 }
