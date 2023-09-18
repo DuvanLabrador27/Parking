@@ -11,4 +11,5 @@ import org.springframework.stereotype.Repository;
 public interface VehicleRepository extends JpaRepository<VehicleEntity, Long> {
     @Query(value = "SELECT * FROM vehicles v WHERE v.license_plate=:licensePlate", nativeQuery = true)
     VehicleEntity findByLicensePlate(@Param("licensePlate") String licensePlate);
+
 }

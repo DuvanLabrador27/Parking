@@ -2,6 +2,7 @@ package com.duvanlabrador.parking.Controller;
 
 
 import com.duvanlabrador.parking.DTO.RegisterDto;
+import com.duvanlabrador.parking.Exception.GeneralException;
 import com.duvanlabrador.parking.Service.Interface.IRegisterService;
 import com.duvanlabrador.parking.Service.Interface.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,15 +26,13 @@ public class RegisterController {
 
 
     @GetMapping("/registers/{vehicleId}/{parkingId}")
-    public ResponseEntity<List<RegisterDto>> getAllRegisterByVehicleAndParking(
+    public ResponseEntity<List<RegisterDto>> getRegisterByVehicleAndParking(
             @PathVariable Long vehicleId,
             @PathVariable Long parkingId) {
-        try {
-            List<RegisterDto> registers = registerService.getAllRegisterByVehicleAndParking(vehicleId, parkingId);
+
+            List<RegisterDto> registers = registerService.getRegisterByVehicleAndParking(vehicleId, parkingId);
             return new ResponseEntity<>(registers, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+
     }
 
     @PostMapping("/register/vehicle/{vehicleId}/parking/{parkingId}")
@@ -42,12 +41,19 @@ public class RegisterController {
             @PathVariable Long parkingId,
             @RequestBody RegisterDto registerDto
     ) {
-        try {
             RegisterDto createdRegister = registerService.createRegister(vehicleId, parkingId, registerDto);
             return ResponseEntity.ok(createdRegister);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-        }
+
+    }
+
+    @PostMapping("/exitVehicle/{vehicleId}/parking/{parkingId}")
+    public ResponseEntity<?> exitVehicleToParking(
+            @PathVariable Long vehicleId,
+            @PathVariable Long parkingId
+    ) {
+            registerService.registerExit(vehicleId, parkingId);
+            return ResponseEntity.ok("Vehicle exit registered successfully");
+
     }
 
 

@@ -33,11 +33,11 @@ public class RegisterServiceImpl implements IRegisterService {
     }
 
     @Override
-    public List<RegisterDto> getAllRegisterByVehicleAndParking(Long vehicleId, Long parkingId) {
+    public List<RegisterDto> getRegisterByVehicleAndParking(Long vehicleId, Long parkingId) {
         List<RegisterEntity> registerEntities = registerRepository.findAllByVehicleVehicleIdAndParkingParkingId(vehicleId, parkingId);
         return registerEntities.stream().map(register -> RegisterConverter.mapToDto(register)).collect(Collectors.toList());
     }
-
+    @Override
     public RegisterDto createRegister(Long vehicleId, Long parkingId, RegisterDto registerDto) {
         VehicleEntity vehicle = vehicleRepository.findById(vehicleId)
                 .orElseThrow(() -> new GeneralException("Vehicle not found with ID " + vehicleId));
@@ -61,6 +61,21 @@ public class RegisterServiceImpl implements IRegisterService {
 
         return RegisterConverter.mapToDto(savedRegister);
     }
+    @Override
+    public void registerExit(Long vehicleId, Long parkingId) {
+        VehicleEntity vehicleEntity = vehicleRepository.findById(vehicleId)
+                .orElseThrow(() -> new GeneralException("Vehicle not found with ID " + vehicleId));
+
+        ParkingEntity parkingEntity = parkingRepository.findById(parkingId)
+                .orElseThrow(() -> new GeneralException("Parking not found with ID " + parkingId));
+
+        RegisterEntity registerEntity = registerRepository.findByVehicleAndParkingAndDepartureTimeIsNull(vehicleEntity, parkingEntity)
+                .orElseThrow(() -> new GeneralException("No entry found for the vehicle in the parking"));
+
+        registerEntity.setDepartureTime(LocalDateTime.now());
+        registerRepository.save(registerEntity);
+    }
+
 
 
 }
