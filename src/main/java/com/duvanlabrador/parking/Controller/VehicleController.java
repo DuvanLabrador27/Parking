@@ -2,6 +2,7 @@ package com.duvanlabrador.parking.Controller;
 
 import com.duvanlabrador.parking.DTO.UserDto;
 import com.duvanlabrador.parking.DTO.VehicleDto;
+import com.duvanlabrador.parking.Exception.GeneralException;
 import com.duvanlabrador.parking.Service.Interface.IVehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,13 +38,12 @@ public class VehicleController {
 
     @PostMapping("/createVehicle")
     public ResponseEntity<VehicleDto> registerEntry(@RequestBody VehicleDto vehicleDto) {
-        try {
+
             VehicleDto vehicle = this.vehicleService.createVehicle(vehicleDto);
             return new ResponseEntity<>(vehicle, HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.CONFLICT);
-        }
+
     }
+
 
     @PutMapping("/updateVehicle/{vehicleId}")
     public ResponseEntity<VehicleDto> updateVehicle(@PathVariable Long vehicleId, @RequestBody VehicleDto vehicleDto){

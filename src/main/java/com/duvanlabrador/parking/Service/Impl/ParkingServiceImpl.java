@@ -68,7 +68,7 @@ public class ParkingServiceImpl implements IParkingService {
         parkingEntity.setParkingCapacity(parkingDto.getParkingCapacity());
         parkingEntity.setParkingPriceForHour(parkingDto.getParkingPriceForHour());
         parkingEntity.setParkingPriceForDay(parkingDto.getParkingPriceForDay());
-        parkingEntity.setGetParkingPriceForMonth(parkingDto.getGetParkingPriceForMonth());
+        parkingEntity.setParkingPriceForMonth(parkingDto.getParkingPriceForMonth());
         parkingEntity.setAvailableSpace(parkingDto.getAvailableSpace());
         parkingEntity.setParkingStatus(parkingDto.getParkingStatus());
 

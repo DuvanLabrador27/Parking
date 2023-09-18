@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class RegisterServiceImpl implements IRegisterService {
@@ -30,9 +31,11 @@ public class RegisterServiceImpl implements IRegisterService {
         this.parkingRepository = parkingRepository;
         this.registerRepository = registerRepository;
     }
+
     @Override
     public List<RegisterDto> getAllRegisterByVehicleAndParking(Long vehicleId, Long parkingId) {
-        return null;
+        List<RegisterEntity> registerEntities = registerRepository.findAllByVehicleVehicleIdAndParkingParkingId(vehicleId, parkingId);
+        return registerEntities.stream().map(register -> RegisterConverter.mapToDto(register)).collect(Collectors.toList());
     }
 
     public RegisterDto createRegister(Long vehicleId, Long parkingId, RegisterDto registerDto) {

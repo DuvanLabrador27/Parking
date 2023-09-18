@@ -6,10 +6,12 @@ import com.duvanlabrador.parking.DTO.VehicleDto;
 import com.duvanlabrador.parking.Entity.ParkingEntity;
 import com.duvanlabrador.parking.Entity.VehicleEntity;
 import com.duvanlabrador.parking.Exception.GeneralException;
+import com.duvanlabrador.parking.Exception.Message;
 import com.duvanlabrador.parking.Repository.ParkingRepository;
 import com.duvanlabrador.parking.Repository.VehicleRepository;
 import com.duvanlabrador.parking.Service.Interface.IVehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -51,7 +53,8 @@ public class VehicleServiceImpl implements IVehicleService {
             VehicleEntity newVehicle = this.vehicleRepository.save(vehicleEntity);
             return VehicleConverter.mapToDto(newVehicle);
         } else {
-            throw new IllegalArgumentException("The license plate doesn't meet the requirements.");
+
+            throw new GeneralException("The license plate doesn't meet the requirements.");
         }
     }
     public boolean validateLicensePlate(String licensePlate) {

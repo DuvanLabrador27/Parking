@@ -17,7 +17,7 @@ public class ParkingDto {
     private Integer parkingCapacity;
     private BigDecimal parkingPriceForHour;
     private BigDecimal parkingPriceForDay;
-    private BigDecimal getParkingPriceForMonth;
+    private BigDecimal ParkingPriceForMonth;
     private Integer availableSpace;
     private ParkingStatus parkingStatus;
 }

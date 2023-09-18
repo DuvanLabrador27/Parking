@@ -12,7 +12,7 @@ public final class ParkingConverter {
         parking.setParkingCapacity(parkingEntity.getParkingCapacity());
         parking.setParkingPriceForHour(parkingEntity.getParkingPriceForHour());
         parking.setParkingPriceForDay(parkingEntity.getParkingPriceForDay());
-        parking.setGetParkingPriceForMonth(parkingEntity.getGetParkingPriceForMonth());
+        parking.setParkingPriceForMonth(parkingEntity.getParkingPriceForMonth());
         parking.setAvailableSpace(parkingEntity.getAvailableSpace());
         parking.setParkingStatus(parkingEntity.getParkingStatus());
         return parking;
@@ -24,7 +24,7 @@ public final class ParkingConverter {
         parking.setParkingCapacity(parkingDto.getParkingCapacity());
         parking.setParkingPriceForHour(parkingDto.getParkingPriceForHour());
         parking.setParkingPriceForDay(parkingDto.getParkingPriceForDay());
-        parking.setGetParkingPriceForMonth(parkingDto.getGetParkingPriceForMonth());
+        parking.setParkingPriceForMonth(parkingDto.getParkingPriceForMonth());
         parking.setAvailableSpace(parkingDto.getAvailableSpace());
         parking.setParkingStatus(parkingDto.getParkingStatus());
         return parking;

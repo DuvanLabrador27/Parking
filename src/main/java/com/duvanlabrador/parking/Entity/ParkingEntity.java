@@ -29,7 +29,7 @@ public class ParkingEntity {
     @Column(name = "parking_price_for_day")
     private BigDecimal parkingPriceForDay;
     @Column(name = "parking_price_for_month")
-    private BigDecimal getParkingPriceForMonth;
+    private BigDecimal ParkingPriceForMonth;
     @Column(name = "available_space")
     private Integer availableSpace;
     @Column(name = "parking_status")
