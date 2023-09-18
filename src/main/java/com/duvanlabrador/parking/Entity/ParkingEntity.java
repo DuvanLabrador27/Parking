@@ -35,14 +35,17 @@ public class ParkingEntity {
     @Column(name = "parking_status")
     @Enumerated
     private ParkingStatus parkingStatus;
+    @ManyToOne(targetEntity = UserEntity.class)
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
+
     @OneToMany(
-            targetEntity = VehicleEntity.class,
+            targetEntity = RegisterEntity.class,
             mappedBy = "parking",
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY
     )
-    private Set<VehicleEntity> vehicle = new HashSet<>();
-    @ManyToOne(targetEntity = UserEntity.class)
-    @JoinColumn(name = "user_id")
-    private UserEntity user;
+    private Set<RegisterEntity> register = new HashSet<>();
+
+
 }

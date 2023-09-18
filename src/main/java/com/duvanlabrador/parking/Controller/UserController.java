@@ -45,4 +45,24 @@ public class UserController {
 
     }
 
+    @PutMapping("/updateUser/{userId}")
+    public ResponseEntity<UserDto> updateUser(@PathVariable Long userId, @RequestBody UserDto userDto){
+        try {
+            UserDto user = this.userService.updateUser(userId,userDto);
+            return new ResponseEntity<>(user,HttpStatus.ACCEPTED);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+
+    }
+
+    @DeleteMapping("/deleteUser/{userId}")
+    public ResponseEntity<String> deleteUser(@PathVariable Long userId){
+        try {
+            this.userService.deleteUser(userId);
+            return new ResponseEntity<>("The user has been delete correctly", HttpStatus.ACCEPTED);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 }

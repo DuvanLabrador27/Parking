@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 public interface IUserService {
     public UserResponse getAllUsers(int pageNumber, int pageSize);
     public UserDto getUserById(Long userId);
-    public UserDto createUser(UserDto userDto) throws Exception;
+
     public UserDto updateUser(Long userId, UserDto userDto);
     public void deleteUser(Long userId);
 

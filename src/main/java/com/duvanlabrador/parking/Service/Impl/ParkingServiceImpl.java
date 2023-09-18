@@ -9,6 +9,9 @@ import com.duvanlabrador.parking.Repository.ParkingRepository;
 import com.duvanlabrador.parking.Repository.UserRepository;
 import com.duvanlabrador.parking.Service.Interface.IParkingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,15 +28,20 @@ public class ParkingServiceImpl implements IParkingService {
     }
 
     @Override
-    public List<ParkingDto> getAllParking() {
-        List<ParkingEntity> parkingEntity = this.parkingRepository.findAll();
-        return parkingEntity.stream().map(parking -> ParkingConverter.mapToDto(parking)).collect(Collectors.toList());
+    public List<ParkingDto> getAllParkingByUser(Long userId) {
+        List<ParkingEntity> parkingEntities = parkingRepository.findByUserUserId(userId);
+        return  parkingEntities.stream().map(parking -> ParkingConverter.mapToDto(parking)).collect(Collectors.toList());
     }
 
     @Override
-    public ParkingDto getParkingById(Long parkingId) {
+    public ParkingDto getParkingById(Long userId, Long parkingId) {
+        UserEntity userEntity = this.userRepository.findById(userId)
+                .orElseThrow(() -> new GeneralException("User not found whit ID" + userId));
         ParkingEntity parkingEntity = this.parkingRepository.findById(parkingId)
                 .orElseThrow(() -> new GeneralException("Parking not found whit ID" + parkingId));
+        if (!parkingEntity.getUser().getUserId().equals(userEntity.getUserId())){
+            throw new GeneralException("the parking don't belong to user");
+        }
         return ParkingConverter.mapToDto(parkingEntity);
     }
 
@@ -48,9 +56,14 @@ public class ParkingServiceImpl implements IParkingService {
     }
 
     @Override
-    public ParkingDto updateParking(Long parkingId, ParkingDto parkingDto) {
+    public ParkingDto updateParking(Long userId, ParkingDto parkingDto,Long parkingId) {
+        UserEntity userEntity = this.userRepository.findById(userId)
+                .orElseThrow(() -> new GeneralException("User not found whit ID" + userId));
         ParkingEntity parkingEntity = this.parkingRepository.findById(parkingId)
                 .orElseThrow(() -> new GeneralException("Parking not found whit ID" + parkingId));
+        if (!parkingEntity.getUser().getUserId().equals(userEntity.getUserId())){
+            throw new GeneralException("the parking don't belong to user");
+        }
         parkingEntity.setParkingName(parkingDto.getParkingName());
         parkingEntity.setParkingCapacity(parkingDto.getParkingCapacity());
         parkingEntity.setParkingPriceForHour(parkingDto.getParkingPriceForHour());
@@ -64,9 +77,14 @@ public class ParkingServiceImpl implements IParkingService {
     }
 
     @Override
-    public void deleteParking(Long parkingId) {
+    public void deleteParking(Long userId, Long parkingId) {
+        UserEntity userEntity = this.userRepository.findById(userId)
+                .orElseThrow(() -> new GeneralException("User not found whit ID" + userId));
         ParkingEntity parkingEntity = this.parkingRepository.findById(parkingId)
                 .orElseThrow(() -> new GeneralException("Parking not found whit ID" + parkingId));
+        if (!parkingEntity.getUser().getUserId().equals(userEntity.getUserId())){
+            throw new GeneralException("the parking don't belong to user");
+        }
         this.parkingRepository.delete(parkingEntity);
     }
 

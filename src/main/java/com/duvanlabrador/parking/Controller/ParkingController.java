@@ -1,12 +1,13 @@
 package com.duvanlabrador.parking.Controller;
 
 import com.duvanlabrador.parking.DTO.ParkingDto;
-import com.duvanlabrador.parking.Entity.ParkingEntity;
 import com.duvanlabrador.parking.Service.Interface.IParkingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("api/v1")
@@ -16,6 +17,25 @@ public class ParkingController {
     public ParkingController(IParkingService parkingService){
         this.parkingService = parkingService;
     }
+
+    @GetMapping("/users/{userId}/parking")
+    public List<ParkingDto> listCommentByUser(@PathVariable(value = "userId") Long userId){
+        return parkingService.getAllParkingByUser(userId);
+    }
+
+    @GetMapping("/user/{userId}/parking/{parkingId}")
+    public ResponseEntity<ParkingDto> getUserByParkingForId(
+            @PathVariable(value = "userId") Long userId,
+            @PathVariable(value = "parkingId") Long parkingId){
+        try {
+            ParkingDto parkingDto = this.parkingService.getParkingById(userId,parkingId);
+            return new ResponseEntity<>(parkingDto,HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+
+    }
+
     @PostMapping("/parking/{userId}")
     public ResponseEntity<ParkingDto> createdParking(
             @PathVariable(value = "userId") long userId,
@@ -27,4 +47,31 @@ public class ParkingController {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
     }
+
+    @PutMapping("/user/{userId}/parking/{parkingId}")
+    public ResponseEntity<ParkingDto> updateParking(
+            @PathVariable(value = "userId") Long userId,
+            @RequestBody ParkingDto parkingDto,
+            @PathVariable(value = "parkingId") Long parkingId
+           ){
+        try {
+            ParkingDto parking = this.parkingService.updateParking(userId,parkingDto,parkingId);
+            return new ResponseEntity<ParkingDto>(parking,HttpStatus.ACCEPTED);
+        }catch (Exception e){
+            return new ResponseEntity<ParkingDto>(HttpStatus.CONFLICT);
+        }
+    }
+
+    @DeleteMapping("/user/{userId}/parking/{parkingId}")
+    public ResponseEntity<String> deleteParking(
+            @PathVariable(value = "userId") Long userId,
+            @PathVariable(value = "parkingId") Long parkingId){
+        try {
+            this.parkingService.deleteParking(userId,parkingId);
+            return new ResponseEntity<>("The parking has been delete correctly",HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+    }
+
 }

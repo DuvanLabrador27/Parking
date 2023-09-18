@@ -13,5 +13,5 @@ public class RegisterDto {
     private Long registerId;
     private LocalDateTime entryTime;
     private LocalDateTime departureTime;
-    private Boolean firstEntry;
+
 }

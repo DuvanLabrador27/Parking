@@ -16,8 +16,6 @@ import java.time.LocalDateTime;
 public class VehicleDto {
     private Long vehicleId;
     private String licensePlate;
-    private LocalDateTime entryTime;
-    private LocalDateTime departureTime;
-    private Boolean firstEntry;
+
 
 }

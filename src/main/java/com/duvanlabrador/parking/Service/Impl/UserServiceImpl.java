@@ -58,14 +58,6 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public UserDto createUser(UserDto userDto) throws Exception {
-        UserEntity userEntity = UserConverter.mapToEntity(userDto);
-        UserEntity newUser = this.userRepository.save(userEntity);
-        UserDto user = UserConverter.mapToDto(newUser);
-        return user;
-    }
-
-    @Override
     public UserDto updateUser(Long userId, UserDto userDto) {
         UserEntity userEntity = this.userRepository.findById(userId).orElseThrow(() -> new GeneralException("User not 	found whit ID" + userId));
 
