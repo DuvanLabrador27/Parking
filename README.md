@@ -19,7 +19,10 @@ Este proyecto se centra en la creación de usuarios, parqueaderos y registros.
 
 -En el repositorio uno que es la api la cual funciona como tal, la forma la cual se me ocurrio para precargar un user fue utilizando un archivo sql y la configuración CREATE-DROP, cada vez que se inicia la app automaticamente inserta el registro para poder probar la api.
 ![4](https://github.com/DuvanLabrador27/Parking/assets/80419064/f75ae581-add0-43df-8be3-19bd8379bc5e)
+
 -En el repositorio 2 encontre la forma de usarla sin el import sql, ya que con spring security pude configurarlo para precargar el usuario.
+
+![5](https://github.com/DuvanLabrador27/Parking/assets/80419064/1d76d9ff-f7b5-4588-9801-5fce867f2dfd)
 
 
 ## Autor
