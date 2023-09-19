@@ -27,7 +27,7 @@ public class RegisterEntity {
     private LocalDateTime departureTime;
 
     @ManyToOne(targetEntity = VehicleEntity.class)
-    @JoinColumn(name = "vehicle_id")
+    @JoinColumn(name = "license_plate")
     private VehicleEntity vehicle;
 
     @ManyToOne(targetEntity = ParkingEntity.class)

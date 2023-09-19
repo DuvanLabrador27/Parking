@@ -8,8 +8,8 @@ import java.util.List;
 
 @RestController
 public interface IRegisterService {
-    public List<RegisterDto> getRegisterByVehicleAndParking(Long vehicleId, Long parkingId);
-    public RegisterDto createRegister(Long vehicleId,Long parkingId, RegisterDto registerDto);
-    public void registerExit(Long vehicleId, Long parkingId);
+    public List<RegisterDto> getRegisterByVehicleAndParking(String licensePlate, Long parkingId);
+    public RegisterDto createRegister(String licensePlate,Long parkingId, RegisterDto registerDto);
+    public void registerExit(String licensePlate, Long parkingId);
 
 }

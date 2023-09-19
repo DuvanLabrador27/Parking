@@ -38,9 +38,9 @@ public class VehicleServiceImpl implements IVehicleService {
     }
 
     @Override
-    public VehicleDto getVehicleById(Long vehicleId) {
-        VehicleEntity vehicleEntity = this.vehicleRepository.findById(vehicleId)
-                .orElseThrow(() -> new GeneralException("Vehicle not found whit ID" + vehicleId));
+    public VehicleDto getVehicleById(String licensePLate) {
+        VehicleEntity vehicleEntity = this.vehicleRepository.findByLicensePlate(licensePLate);
+
         return VehicleConverter.mapToDto(vehicleEntity);
     }
 
@@ -64,21 +64,11 @@ public class VehicleServiceImpl implements IVehicleService {
         return licensePlate.matches(regex);
     }
 
-    @Override
-    public VehicleDto updateVehicle(Long vehicleId, VehicleDto vehicleDto) {
-        VehicleEntity vehicleEntity = this.vehicleRepository.findById(vehicleId)
-                .orElseThrow(() -> new GeneralException("Vehicle not found whit ID" + vehicleId));
-        vehicleEntity.setLicensePlate(vehicleDto.getLicensePlate());
-
-
-        VehicleEntity updateVehicle = this.vehicleRepository.save(vehicleEntity);
-        return VehicleConverter.mapToDto(updateVehicle);
-    }
 
     @Override
-    public void deleteVehicle(Long vehicleId) {
-        VehicleEntity vehicleEntity = this.vehicleRepository.findById(vehicleId)
-                .orElseThrow(() -> new GeneralException("Vehicle not found whit ID" + vehicleId));
+    public void deleteVehicle(String licensePLate) {
+        VehicleEntity vehicleEntity = this.vehicleRepository.findByLicensePlate(licensePLate);
+
         this.vehicleRepository.delete(vehicleEntity);
     }
 

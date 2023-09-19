@@ -27,12 +27,9 @@ public class ParkingController {
     public ResponseEntity<ParkingDto> getUserByParkingForId(
             @PathVariable(value = "userId") Long userId,
             @PathVariable(value = "parkingId") Long parkingId){
-        try {
+
             ParkingDto parkingDto = this.parkingService.getParkingById(userId,parkingId);
             return new ResponseEntity<>(parkingDto,HttpStatus.OK);
-        }catch (Exception e){
-            return new ResponseEntity<>(HttpStatus.CONFLICT);
-        }
 
     }
 
@@ -54,24 +51,20 @@ public class ParkingController {
             @RequestBody ParkingDto parkingDto,
             @PathVariable(value = "parkingId") Long parkingId
            ){
-        try {
+
             ParkingDto parking = this.parkingService.updateParking(userId,parkingDto,parkingId);
             return new ResponseEntity<ParkingDto>(parking,HttpStatus.ACCEPTED);
-        }catch (Exception e){
-            return new ResponseEntity<ParkingDto>(HttpStatus.CONFLICT);
-        }
+
     }
 
     @DeleteMapping("/user/{userId}/parking/{parkingId}")
     public ResponseEntity<String> deleteParking(
             @PathVariable(value = "userId") Long userId,
             @PathVariable(value = "parkingId") Long parkingId){
-        try {
+
             this.parkingService.deleteParking(userId,parkingId);
             return new ResponseEntity<>("The parking has been delete correctly",HttpStatus.OK);
-        }catch (Exception e){
-            return new ResponseEntity<>(HttpStatus.CONFLICT);
-        }
+
     }
 
 }

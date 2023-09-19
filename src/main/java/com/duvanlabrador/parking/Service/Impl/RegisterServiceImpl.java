@@ -33,18 +33,20 @@ public class RegisterServiceImpl implements IRegisterService {
     }
 
     @Override
-    public List<RegisterDto> getRegisterByVehicleAndParking(Long vehicleId, Long parkingId) {
-        List<RegisterEntity> registerEntities = registerRepository.findAllByVehicleVehicleIdAndParkingParkingId(vehicleId, parkingId);
+    public List<RegisterDto> getRegisterByVehicleAndParking(String licensePlate, Long parkingId) {
+        List<RegisterEntity> registerEntities = registerRepository.findAllByVehicleLicensePlateAndParkingParkingId(licensePlate, parkingId);
         return registerEntities.stream().map(register -> RegisterConverter.mapToDto(register)).collect(Collectors.toList());
     }
     @Override
-    public RegisterDto createRegister(Long vehicleId, Long parkingId, RegisterDto registerDto) {
-        VehicleEntity vehicle = vehicleRepository.findById(vehicleId)
-                .orElseThrow(() -> new GeneralException("Vehicle not found with ID " + vehicleId));
+    public RegisterDto createRegister(String licensePlate, Long parkingId, RegisterDto registerDto) {
+        VehicleEntity vehicle = vehicleRepository.findByLicensePlate(licensePlate);
+
+        if (vehicle == null) {
+            throw new GeneralException("Vehicle with license plate " + licensePlate + " not found.");
+        }
 
         ParkingEntity parking = parkingRepository.findById(parkingId)
                 .orElseThrow(() -> new GeneralException("Parking not found with ID " + parkingId));
-
 
         boolean vehicleAlreadyRegistered = registerRepository.existsByVehicleAndParking(vehicle, parking);
 
@@ -61,10 +63,11 @@ public class RegisterServiceImpl implements IRegisterService {
 
         return RegisterConverter.mapToDto(savedRegister);
     }
+
     @Override
-    public void registerExit(Long vehicleId, Long parkingId) {
-        VehicleEntity vehicleEntity = vehicleRepository.findById(vehicleId)
-                .orElseThrow(() -> new GeneralException("Vehicle not found with ID " + vehicleId));
+    public void registerExit(String licensePlate, Long parkingId) {
+        VehicleEntity vehicleEntity = vehicleRepository.findByLicensePlate(licensePlate);
+
 
         ParkingEntity parkingEntity = parkingRepository.findById(parkingId)
                 .orElseThrow(() -> new GeneralException("Parking not found with ID " + parkingId));

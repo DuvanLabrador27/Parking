@@ -26,10 +26,10 @@ public class VehicleController {
     public List<VehicleDto> getAllVehicles(){
         return this.vehicleService.getAllVehicles();
     }
-    @GetMapping("/vehicles/{vehicleId}")
-    public ResponseEntity<VehicleDto> getVehicleById(@PathVariable Long vehicleId){
+    @GetMapping("/vehicles/{licensePLate}")
+    public ResponseEntity<VehicleDto> getVehicleById(@PathVariable String licensePLate){
         try {
-            VehicleDto vehicle = this.vehicleService.getVehicleById(vehicleId);
+            VehicleDto vehicle = this.vehicleService.getVehicleById(licensePLate);
             return new ResponseEntity<>(vehicle, HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -45,21 +45,12 @@ public class VehicleController {
     }
 
 
-    @PutMapping("/updateVehicle/{vehicleId}")
-    public ResponseEntity<VehicleDto> updateVehicle(@PathVariable Long vehicleId, @RequestBody VehicleDto vehicleDto){
-        try {
-            VehicleDto vehicle = this.vehicleService.updateVehicle(vehicleId,vehicleDto);
-            return new ResponseEntity<>(vehicle,HttpStatus.ACCEPTED);
-        }catch (Exception e){
-            return new ResponseEntity<>(HttpStatus.CONFLICT);
-        }
 
-    }
 
-    @DeleteMapping("/deleteVehicle/{vehicleId}")
-    public ResponseEntity<String> deleteVehicle(@PathVariable Long vehicleId){
+    @DeleteMapping("/deleteVehicle/{licensePLate}")
+    public ResponseEntity<String> deleteVehicle(@PathVariable String licensePLate){
         try {
-            this.vehicleService.deleteVehicle(vehicleId);
+            this.vehicleService.deleteVehicle(licensePLate);
             return new ResponseEntity<>("The vehicle has been delete correctly", HttpStatus.ACCEPTED);
         }catch (Exception e){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

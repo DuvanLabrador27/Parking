@@ -16,13 +16,8 @@ import java.util.Set;
 @Data
 public class VehicleEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "vehicle_id")
-    private Long vehicleId;
     @Column(name = "license_plate", unique = true)
     private String licensePlate;
-    @Column(name = "entry_time")
-
     @OneToMany(
             targetEntity = RegisterEntity.class,
             mappedBy = "vehicle",

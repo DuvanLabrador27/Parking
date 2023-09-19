@@ -13,9 +13,9 @@ import java.util.Optional;
 @Repository
 public interface RegisterRepository extends JpaRepository<RegisterEntity, Long> {
     boolean existsByVehicleAndParking(VehicleEntity vehicle, ParkingEntity parking);
-    List<RegisterEntity> findAllByVehicleVehicleIdAndParkingParkingId(Long vehicleId, Long parkingId);
-
+    List<RegisterEntity> findAllByVehicleLicensePlateAndParkingParkingId(String licensePlate, Long parkingId);
 
     Optional<RegisterEntity> findByVehicleAndParkingAndDepartureTimeIsNull(VehicleEntity vehicle, ParkingEntity parking);
+
 
 }

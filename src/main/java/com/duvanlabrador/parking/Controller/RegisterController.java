@@ -25,33 +25,33 @@ public class RegisterController {
     }
 
 
-    @GetMapping("/registers/{vehicleId}/{parkingId}")
+    @GetMapping("/registers/{licensePlate}/{parkingId}")
     public ResponseEntity<List<RegisterDto>> getRegisterByVehicleAndParking(
-            @PathVariable Long vehicleId,
+            @PathVariable String licensePlate,
             @PathVariable Long parkingId) {
 
-            List<RegisterDto> registers = registerService.getRegisterByVehicleAndParking(vehicleId, parkingId);
+            List<RegisterDto> registers = registerService.getRegisterByVehicleAndParking(licensePlate, parkingId);
             return new ResponseEntity<>(registers, HttpStatus.OK);
 
     }
 
-    @PostMapping("/register/vehicle/{vehicleId}/parking/{parkingId}")
+    @PostMapping("/register/vehicle/{licensePlate}/parking/{parkingId}")
     public ResponseEntity<RegisterDto> createRegister(
-            @PathVariable Long vehicleId,
+            @PathVariable String licensePlate,
             @PathVariable Long parkingId,
             @RequestBody RegisterDto registerDto
     ) {
-            RegisterDto createdRegister = registerService.createRegister(vehicleId, parkingId, registerDto);
+            RegisterDto createdRegister = registerService.createRegister(licensePlate, parkingId, registerDto);
             return ResponseEntity.ok(createdRegister);
 
     }
 
-    @PostMapping("/exitVehicle/{vehicleId}/parking/{parkingId}")
+    @PostMapping("/exitVehicle/{licensePlate}/parking/{parkingId}")
     public ResponseEntity<?> exitVehicleToParking(
-            @PathVariable Long vehicleId,
+            @PathVariable String licensePlate,
             @PathVariable Long parkingId
     ) {
-            registerService.registerExit(vehicleId, parkingId);
+            registerService.registerExit(licensePlate, parkingId);
             return ResponseEntity.ok("Vehicle exit registered successfully");
 
     }

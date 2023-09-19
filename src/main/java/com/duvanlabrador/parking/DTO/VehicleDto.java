@@ -14,7 +14,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class VehicleDto {
-    private Long vehicleId;
     private String licensePlate;
 
 

@@ -6,7 +6,6 @@ import com.duvanlabrador.parking.Entity.VehicleEntity;
 public final class VehicleConverter {
     public static VehicleDto mapToDto(VehicleEntity vehicleEntity){
         VehicleDto vehicle = new VehicleDto();
-        vehicle.setVehicleId(vehicleEntity.getVehicleId());
         vehicle.setLicensePlate(vehicleEntity.getLicensePlate());
 
 
